@@ -1,0 +1,37 @@
+app: api-vtt-bzh
+service: events
+
+# Create an optimized package for our functions
+package:
+  individually: true
+
+plugins:
+  - serverless-bundle # Package our functions with Webpack
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: prod
+  region: eu-west-3
+  timeout: 120
+
+functions:
+  cron:
+    handler: src/cron/handler.cron
+    events:
+      - schedule: rate(1 day)
+      - http:
+          path: cron
+          method: get
+    # destinations:
+    #     onSuccess: bucketPut
+  getAllEvents:
+    handler: src/api/handler.getAllEvents
+    events:
+      - http:
+          path: events
+          method: get
+  # bucketPut:
+  #   handler: s3/handler.bucketPut
