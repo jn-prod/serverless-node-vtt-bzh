@@ -24,12 +24,12 @@ export default {
       console.error(`[postEventsReport] - cannot post report in db: ${e}`);
     }
   },
-  getLastEventsReport: () => {
+  getLastEventsReport: (query = {}, projection = { _id: false }) => {
     const collection = 'reports';
-    return client.getLast(DB, collection, {});
+    return client.getLast(DB, collection, query, projection);
   },
-  getEvents: () => {
+  getEvents: (query = {}, projection = { url: false, _id: false }) => {
     const collection = 'events';
-    return client.getEntities(DB, collection, {});
+    return client.getEntities(DB, collection, query, { projection });
   },
 };

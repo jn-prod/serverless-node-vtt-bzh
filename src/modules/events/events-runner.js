@@ -7,6 +7,7 @@ import _ from 'lodash';
 import iconv from 'iconv-lite';
 
 import config from '../../config/default';
+import eventsRepository from './events-repository';
 
 const txt_ref_int_nom_2 = '#txt_ref_int_nom_2';
 const txt_ref_int_lieu_2 = '#txt_ref_int_lieu_2';
@@ -134,9 +135,19 @@ export default async function run() {
   try {
     const urls = await getUrls();
 
-    console.log(`we have ${urls.length} events to process`);
+    console.log(`we have get ${urls.length} events urls from website`);
 
-    const events = await getEvents(urls);
+    const dbEventsUrls = await eventsRepository.getEvents({ url: { $exists: true } }, { url: true });
+
+    console.log(`we have get ${dbEventsUrls.length} events urls from db`);
+
+    const urlsToProcess = urls.filter((url) => {
+      return !dbEventsUrls.filter((e) => url.indexOf(e.url) > -1).length > 0;
+    });
+
+    console.log(`we have ${urlsToProcess.length} events to process`);
+
+    const events = await getEvents(urlsToProcess);
 
     console.log(`we have process ${events.length} events`);
 

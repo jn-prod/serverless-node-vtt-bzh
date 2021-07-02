@@ -15,24 +15,32 @@ const post = async (dbName, collection, data) => {
   client.close();
 };
 
-const getLast = async (dbName, collection, data) => {
-  assert.ok('[getLast] - Missing dbName params');
-  assert.ok('[getLast] - Missing collection params');
-  assert.ok('[getLast] - Missing data params');
+const getLast = async (dbName, collection, query, projection) => {
+  assert.ok(dbName, '[getLast] - Missing dbName params');
+  assert.ok(collection, '[getLast] - Missing collection params');
+  assert.ok(query, '[getLast] - Missing query params');
+  assert.ok(projection, '[getLast] - Missing projection params');
 
   const client = await getClient();
-  const res = await client.db(dbName).collection(collection).find(data).sort({ date: -1 }).limit(1).toArray();
+  const res = await client
+    .db(dbName)
+    .collection(collection)
+    .find(query, projection)
+    .sort({ date: -1 })
+    .limit(1)
+    .toArray();
   client.close();
   return res[0] || {};
 };
 
-const getEntities = async (dbName, collection, data) => {
-  assert.ok('[getLast] - Missing dbName params');
-  assert.ok('[getLast] - Missing collection params');
-  assert.ok('[getLast] - Missing data params');
+const getEntities = async (dbName, collection, query, projection) => {
+  assert.ok(dbName, '[getLast] - Missing dbName params');
+  assert.ok(collection, '[getLast] - Missing collection params');
+  assert.ok(query, '[getLast] - Missing query params');
+  assert.ok(projection, '[getLast] - Missing projection params');
 
   const client = await getClient();
-  const res = await client.db(dbName).collection(collection).find(data).toArray();
+  const res = await client.db(dbName).collection(collection).find(query, projection).toArray();
   client.close();
   return res;
 };

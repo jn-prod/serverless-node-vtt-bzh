@@ -9,6 +9,7 @@ export default async function getAll() {
     eventsItems.forEach((element) => {
       eventsReport.data.push(element);
     });
+    eventsReport.count = eventsReport.data.length;
 
     eventsCache = eventsReport;
 

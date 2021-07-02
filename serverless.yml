@@ -23,7 +23,7 @@ functions:
     events:
       - schedule: rate(1 day)
       - http:
-          path: cron
+          path: cron/events
           method: get
     # destinations:
     #     onSuccess: bucketPut
