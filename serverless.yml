@@ -16,6 +16,7 @@ provider:
   stage: prod
   region: eu-west-3
   timeout: 120
+  lambdaHashingVersion: 20201221
 
 functions:
   cron:
