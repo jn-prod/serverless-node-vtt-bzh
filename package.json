@@ -6,9 +6,9 @@
   "scripts": {
     "runner": "node cron/runner.js",
     "cron:local": "serverless invoke local -f cron",
-    "bucket:put:local": "serverless invoke local -f bucketPut -p ./s3/payloads/input.json",
     "events:get:local": "serverless invoke local -f getAllEvents",
-    "deploy": "serverless deploy"
+    "deploy": "serverless deploy",
+    "test": "jest"
   },
   "author": "Nicolas Jouanno <pro@nicolasjouanno.com>",
   "license": "ISC",
@@ -20,20 +20,29 @@
     "bluebird": "^3.7.2",
     "iconv-lite": "^0.4.24",
     "lodash": "^4.17.21",
-    "mongodb": "^3.6.9",
+    "mongodb": "^4.3.1",
     "mongodb-client-encryption": "^1.2.5",
     "nanoid": "^3.1.23",
     "node-html-parser": "^3.3.6"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "babel-jest": "^27.3.1",
     "eslint": "^7.29.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-prettier": "^3.4.0",
-    "prettier": "^2.3.1",
+    "jest": "^27.5.1",
+    "prettier": "^2.5.1",
     "serverless-bundle": "^5.0.2",
     "serverless-dotenv-plugin": "^3.9.0",
     "serverless-offline": "^8.2.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
   }
 }
